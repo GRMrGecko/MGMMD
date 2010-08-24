@@ -1,0 +1,812 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A2CBB1E1222A4F200C864D8 /* MGMMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB141222A4F200C864D8 /* MGMMD5.m */; };
+		2A2CBB1F1222A4F200C864D8 /* MGMSHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB171222A4F200C864D8 /* MGMSHA224.m */; };
+		2A2CBB201222A4F200C864D8 /* MGMSHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB191222A4F200C864D8 /* MGMSHA256.m */; };
+		2A2CBB211222A4F200C864D8 /* MGMSHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */; };
+		2A2CBB221222A4F200C864D8 /* MGMSHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */; };
+		2A2CBBD91222BC0600C864D8 /* MGMSHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */; };
+		2A91445412230D880075E219 /* MGMMD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A91445312230D880075E219 /* MGMMD.m */; };
+		2A9145F812233E1C0075E219 /* MGMMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB141222A4F200C864D8 /* MGMMD5.m */; };
+		2A9145F912233E1C0075E219 /* MGMSHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */; };
+		2A9145FA12233E1C0075E219 /* MGMSHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB171222A4F200C864D8 /* MGMSHA224.m */; };
+		2A9145FB12233E1C0075E219 /* MGMSHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB191222A4F200C864D8 /* MGMSHA256.m */; };
+		2A9145FC12233E1C0075E219 /* MGMSHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */; };
+		2A9145FD12233E1C0075E219 /* MGMSHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */; };
+		2A9145FE12233E1C0075E219 /* MGMMD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A91445312230D880075E219 /* MGMMD.m */; };
+		2A91460012233E450075E219 /* MGMMDTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460112233E450075E219 /* MGMMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB131222A4F200C864D8 /* MGMMD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460212233E450075E219 /* MGMSHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460312233E450075E219 /* MGMSHA224.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB161222A4F200C864D8 /* MGMSHA224.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460412233E450075E219 /* MGMSHA256.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB181222A4F200C864D8 /* MGMSHA256.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460512233E450075E219 /* MGMSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460612233E450075E219 /* MGMSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91460712233E450075E219 /* MGMMD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A91445212230D880075E219 /* MGMMD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461412233F800075E219 /* MGMMDTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461512233F800075E219 /* MGMMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB131222A4F200C864D8 /* MGMMD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461612233F800075E219 /* MGMSHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461712233F800075E219 /* MGMSHA224.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB161222A4F200C864D8 /* MGMSHA224.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461812233F800075E219 /* MGMSHA256.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB181222A4F200C864D8 /* MGMSHA256.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461912233F800075E219 /* MGMSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461A12233F800075E219 /* MGMSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461B12233F800075E219 /* MGMMD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A91445212230D880075E219 /* MGMMD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91461C12233F9E0075E219 /* MGMMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB141222A4F200C864D8 /* MGMMD5.m */; };
+		2A91461D12233F9E0075E219 /* MGMSHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */; };
+		2A91461E12233F9E0075E219 /* MGMSHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB171222A4F200C864D8 /* MGMSHA224.m */; };
+		2A91461F12233F9E0075E219 /* MGMSHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB191222A4F200C864D8 /* MGMSHA256.m */; };
+		2A91462012233F9E0075E219 /* MGMSHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */; };
+		2A91462112233F9E0075E219 /* MGMSHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */; };
+		2A91462212233F9E0075E219 /* MGMMD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A91445312230D880075E219 /* MGMMD.m */; };
+		2A91463B122340780075E219 /* MGMMDTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91463C122340780075E219 /* MGMMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB131222A4F200C864D8 /* MGMMD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91463D122340780075E219 /* MGMSHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91463E122340780075E219 /* MGMSHA224.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB161222A4F200C864D8 /* MGMSHA224.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91463F122340780075E219 /* MGMSHA256.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB181222A4F200C864D8 /* MGMSHA256.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A914640122340780075E219 /* MGMSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A914641122340780075E219 /* MGMSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A914642122340850075E219 /* MGMMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB141222A4F200C864D8 /* MGMMD5.m */; };
+		2A914643122340850075E219 /* MGMSHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */; };
+		2A914644122340850075E219 /* MGMSHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB171222A4F200C864D8 /* MGMSHA224.m */; };
+		2A914645122340850075E219 /* MGMSHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB191222A4F200C864D8 /* MGMSHA256.m */; };
+		2A914646122340850075E219 /* MGMSHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */; };
+		2A914647122340850075E219 /* MGMSHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */; };
+		2A91464D122340DF0075E219 /* MGMMD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A91445212230D880075E219 /* MGMMD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91464E122340EB0075E219 /* MGMMD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A91445312230D880075E219 /* MGMMD.m */; };
+		2A914658122341260075E219 /* MGMMDTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A914659122341260075E219 /* MGMMD5.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB131222A4F200C864D8 /* MGMMD5.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465A122341260075E219 /* MGMSHA1.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465B122341260075E219 /* MGMSHA224.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB161222A4F200C864D8 /* MGMSHA224.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465C122341260075E219 /* MGMSHA256.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB181222A4F200C864D8 /* MGMSHA256.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465D122341260075E219 /* MGMSHA384.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465E122341260075E219 /* MGMSHA512.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A91465F122341260075E219 /* MGMMD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A91445212230D880075E219 /* MGMMD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A9146631223414B0075E219 /* MGMMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB141222A4F200C864D8 /* MGMMD5.m */; };
+		2A9146641223414B0075E219 /* MGMSHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */; };
+		2A9146651223414B0075E219 /* MGMSHA224.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB171222A4F200C864D8 /* MGMSHA224.m */; };
+		2A9146661223414B0075E219 /* MGMSHA256.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB191222A4F200C864D8 /* MGMSHA256.m */; };
+		2A9146671223414B0075E219 /* MGMSHA384.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */; };
+		2A9146681223414B0075E219 /* MGMSHA512.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */; };
+		2A9146691223414B0075E219 /* MGMMD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A91445312230D880075E219 /* MGMMD.m */; };
+		8DD76F9A0486AA7600D96B5E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
+		8DD76F9F0486AA7600D96B5E /* MGMMD.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* MGMMD.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F9E0486AA7600D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F9F0486AA7600D96B5E /* MGMMD.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		08FB7796FE84155DC02AAC07 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2A2CBB131222A4F200C864D8 /* MGMMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMMD5.h; sourceTree = "<group>"; };
+		2A2CBB141222A4F200C864D8 /* MGMMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMMD5.m; sourceTree = "<group>"; };
+		2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMMDTypes.h; sourceTree = "<group>"; };
+		2A2CBB161222A4F200C864D8 /* MGMSHA224.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSHA224.h; sourceTree = "<group>"; };
+		2A2CBB171222A4F200C864D8 /* MGMSHA224.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSHA224.m; sourceTree = "<group>"; };
+		2A2CBB181222A4F200C864D8 /* MGMSHA256.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSHA256.h; sourceTree = "<group>"; };
+		2A2CBB191222A4F200C864D8 /* MGMSHA256.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSHA256.m; sourceTree = "<group>"; };
+		2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSHA384.h; sourceTree = "<group>"; };
+		2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSHA384.m; sourceTree = "<group>"; };
+		2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSHA512.h; sourceTree = "<group>"; };
+		2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSHA512.m; sourceTree = "<group>"; };
+		2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSHA1.h; sourceTree = "<group>"; };
+		2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSHA1.m; sourceTree = "<group>"; };
+		2A91445212230D880075E219 /* MGMMD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMMD.h; sourceTree = "<group>"; };
+		2A91445312230D880075E219 /* MGMMD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMMD.m; sourceTree = "<group>"; };
+		2A9145F012233D690075E219 /* MGMMD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MGMMD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A9145F712233DB60075E219 /* Framework-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Framework-Info.plist"; sourceTree = "<group>"; };
+		2A91460C12233E6A0075E219 /* libMGMMD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMGMMD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A914638122340590075E219 /* MGMMD.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = MGMMD.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A914655122341040075E219 /* libMGMMD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMGMMD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		32A70AAB03705E1F00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		8DD76FA10486AA7600D96B5E /* MGMMD */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MGMMD; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859EA3029092ED04C91782 /* MGMMD.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = MGMMD.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2A9145EE12233D690075E219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A91460A12233E6A0075E219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914636122340590075E219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914653122341040075E219 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F9B0486AA7600D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* MGMMD */ = {
+			isa = PBXGroup;
+			children = (
+				2A2CBB121222A4F200C864D8 /* Classes */,
+				08FB7795FE84155DC02AAC07 /* Source */,
+				2A9145F612233DB60075E219 /* Resources */,
+				C6859EA2029092E104C91782 /* Documentation */,
+				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = MGMMD;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				32A70AAB03705E1F00C91783 /* Prefix.pch */,
+				08FB7796FE84155DC02AAC07 /* main.m */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76FA10486AA7600D96B5E /* MGMMD */,
+				2A9145F012233D690075E219 /* MGMMD.framework */,
+				2A91460C12233E6A0075E219 /* libMGMMD.a */,
+				2A914638122340590075E219 /* MGMMD.dylib */,
+				2A914655122341040075E219 /* libMGMMD.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2A2CBB121222A4F200C864D8 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A2CBB151222A4F200C864D8 /* MGMMDTypes.h */,
+				2A2CBB131222A4F200C864D8 /* MGMMD5.h */,
+				2A2CBB141222A4F200C864D8 /* MGMMD5.m */,
+				2A2CBBD71222BC0600C864D8 /* MGMSHA1.h */,
+				2A2CBBD81222BC0600C864D8 /* MGMSHA1.m */,
+				2A2CBB161222A4F200C864D8 /* MGMSHA224.h */,
+				2A2CBB171222A4F200C864D8 /* MGMSHA224.m */,
+				2A2CBB181222A4F200C864D8 /* MGMSHA256.h */,
+				2A2CBB191222A4F200C864D8 /* MGMSHA256.m */,
+				2A2CBB1A1222A4F200C864D8 /* MGMSHA384.h */,
+				2A2CBB1B1222A4F200C864D8 /* MGMSHA384.m */,
+				2A2CBB1C1222A4F200C864D8 /* MGMSHA512.h */,
+				2A2CBB1D1222A4F200C864D8 /* MGMSHA512.m */,
+				2A91445212230D880075E219 /* MGMMD.h */,
+				2A91445312230D880075E219 /* MGMMD.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		2A9145F612233DB60075E219 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A9145F712233DB60075E219 /* Framework-Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C6859EA2029092E104C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859EA3029092ED04C91782 /* MGMMD.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2A9145EB12233D690075E219 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A91460012233E450075E219 /* MGMMDTypes.h in Headers */,
+				2A91460112233E450075E219 /* MGMMD5.h in Headers */,
+				2A91460212233E450075E219 /* MGMSHA1.h in Headers */,
+				2A91460312233E450075E219 /* MGMSHA224.h in Headers */,
+				2A91460412233E450075E219 /* MGMSHA256.h in Headers */,
+				2A91460512233E450075E219 /* MGMSHA384.h in Headers */,
+				2A91460612233E450075E219 /* MGMSHA512.h in Headers */,
+				2A91460712233E450075E219 /* MGMMD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A91460812233E6A0075E219 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A91461412233F800075E219 /* MGMMDTypes.h in Headers */,
+				2A91461512233F800075E219 /* MGMMD5.h in Headers */,
+				2A91461612233F800075E219 /* MGMSHA1.h in Headers */,
+				2A91461712233F800075E219 /* MGMSHA224.h in Headers */,
+				2A91461812233F800075E219 /* MGMSHA256.h in Headers */,
+				2A91461912233F800075E219 /* MGMSHA384.h in Headers */,
+				2A91461A12233F800075E219 /* MGMSHA512.h in Headers */,
+				2A91461B12233F800075E219 /* MGMMD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914634122340590075E219 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A91464D122340DF0075E219 /* MGMMD.h in Headers */,
+				2A91463B122340780075E219 /* MGMMDTypes.h in Headers */,
+				2A91463C122340780075E219 /* MGMMD5.h in Headers */,
+				2A91463D122340780075E219 /* MGMSHA1.h in Headers */,
+				2A91463E122340780075E219 /* MGMSHA224.h in Headers */,
+				2A91463F122340780075E219 /* MGMSHA256.h in Headers */,
+				2A914640122340780075E219 /* MGMSHA384.h in Headers */,
+				2A914641122340780075E219 /* MGMSHA512.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914651122341040075E219 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A914658122341260075E219 /* MGMMDTypes.h in Headers */,
+				2A914659122341260075E219 /* MGMMD5.h in Headers */,
+				2A91465A122341260075E219 /* MGMSHA1.h in Headers */,
+				2A91465B122341260075E219 /* MGMSHA224.h in Headers */,
+				2A91465C122341260075E219 /* MGMSHA256.h in Headers */,
+				2A91465D122341260075E219 /* MGMSHA384.h in Headers */,
+				2A91465E122341260075E219 /* MGMSHA512.h in Headers */,
+				2A91465F122341260075E219 /* MGMMD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2A9145EF12233D690075E219 /* MGMMD Framework */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A9145F412233D6A0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Framework" */;
+			buildPhases = (
+				2A9145EB12233D690075E219 /* Headers */,
+				2A9145EC12233D690075E219 /* Resources */,
+				2A9145ED12233D690075E219 /* Sources */,
+				2A9145EE12233D690075E219 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MGMMD Framework";
+			productName = "MGMMD Framework";
+			productReference = 2A9145F012233D690075E219 /* MGMMD.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2A91460B12233E6A0075E219 /* MGMMD Touch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A91460F12233E720075E219 /* Build configuration list for PBXNativeTarget "MGMMD Touch" */;
+			buildPhases = (
+				2A91460812233E6A0075E219 /* Headers */,
+				2A91460912233E6A0075E219 /* Sources */,
+				2A91460A12233E6A0075E219 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MGMMD Touch";
+			productName = "MGMMD Touch";
+			productReference = 2A91460C12233E6A0075E219 /* libMGMMD.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		2A914637122340590075E219 /* MGMMD Dynamic Library */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A91464C1223409F0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Dynamic Library" */;
+			buildPhases = (
+				2A914634122340590075E219 /* Headers */,
+				2A914635122340590075E219 /* Sources */,
+				2A914636122340590075E219 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MGMMD Dynamic Library";
+			productName = "MGMMD Dynamic Library";
+			productReference = 2A914638122340590075E219 /* MGMMD.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		2A914654122341040075E219 /* MGMMD Static Library */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2A9146621223413A0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Static Library" */;
+			buildPhases = (
+				2A914651122341040075E219 /* Headers */,
+				2A914652122341040075E219 /* Sources */,
+				2A914653122341040075E219 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MGMMD Static Library";
+			productName = "MGMMD Static Library";
+			productReference = 2A914655122341040075E219 /* libMGMMD.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		8DD76F960486AA7600D96B5E /* MGMMDTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "MGMMDTest" */;
+			buildPhases = (
+				8DD76F990486AA7600D96B5E /* Sources */,
+				8DD76F9B0486AA7600D96B5E /* Frameworks */,
+				8DD76F9E0486AA7600D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MGMMDTest;
+			productInstallPath = "$(HOME)/bin";
+			productName = MGMMD;
+			productReference = 8DD76FA10486AA7600D96B5E /* MGMMD */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MGMMD" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* MGMMD */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F960486AA7600D96B5E /* MGMMDTest */,
+				2A9145EF12233D690075E219 /* MGMMD Framework */,
+				2A91460B12233E6A0075E219 /* MGMMD Touch */,
+				2A914637122340590075E219 /* MGMMD Dynamic Library */,
+				2A914654122341040075E219 /* MGMMD Static Library */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2A9145EC12233D690075E219 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A9145ED12233D690075E219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A9145F812233E1C0075E219 /* MGMMD5.m in Sources */,
+				2A9145F912233E1C0075E219 /* MGMSHA1.m in Sources */,
+				2A9145FA12233E1C0075E219 /* MGMSHA224.m in Sources */,
+				2A9145FB12233E1C0075E219 /* MGMSHA256.m in Sources */,
+				2A9145FC12233E1C0075E219 /* MGMSHA384.m in Sources */,
+				2A9145FD12233E1C0075E219 /* MGMSHA512.m in Sources */,
+				2A9145FE12233E1C0075E219 /* MGMMD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A91460912233E6A0075E219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A91461C12233F9E0075E219 /* MGMMD5.m in Sources */,
+				2A91461D12233F9E0075E219 /* MGMSHA1.m in Sources */,
+				2A91461E12233F9E0075E219 /* MGMSHA224.m in Sources */,
+				2A91461F12233F9E0075E219 /* MGMSHA256.m in Sources */,
+				2A91462012233F9E0075E219 /* MGMSHA384.m in Sources */,
+				2A91462112233F9E0075E219 /* MGMSHA512.m in Sources */,
+				2A91462212233F9E0075E219 /* MGMMD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914635122340590075E219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A91464E122340EB0075E219 /* MGMMD.m in Sources */,
+				2A914642122340850075E219 /* MGMMD5.m in Sources */,
+				2A914643122340850075E219 /* MGMSHA1.m in Sources */,
+				2A914644122340850075E219 /* MGMSHA224.m in Sources */,
+				2A914645122340850075E219 /* MGMSHA256.m in Sources */,
+				2A914646122340850075E219 /* MGMSHA384.m in Sources */,
+				2A914647122340850075E219 /* MGMSHA512.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2A914652122341040075E219 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A9146631223414B0075E219 /* MGMMD5.m in Sources */,
+				2A9146641223414B0075E219 /* MGMSHA1.m in Sources */,
+				2A9146651223414B0075E219 /* MGMSHA224.m in Sources */,
+				2A9146661223414B0075E219 /* MGMSHA256.m in Sources */,
+				2A9146671223414B0075E219 /* MGMSHA384.m in Sources */,
+				2A9146681223414B0075E219 /* MGMSHA512.m in Sources */,
+				2A9146691223414B0075E219 /* MGMMD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8DD76F990486AA7600D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DD76F9A0486AA7600D96B5E /* main.m in Sources */,
+				2A2CBB1E1222A4F200C864D8 /* MGMMD5.m in Sources */,
+				2A2CBB1F1222A4F200C864D8 /* MGMSHA224.m in Sources */,
+				2A2CBB201222A4F200C864D8 /* MGMSHA256.m in Sources */,
+				2A2CBB211222A4F200C864D8 /* MGMSHA384.m in Sources */,
+				2A2CBB221222A4F200C864D8 /* MGMSHA512.m in Sources */,
+				2A2CBBD91222BC0600C864D8 /* MGMSHA1.m in Sources */,
+				2A91445412230D880075E219 /* MGMMD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB927508733DD40010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = MGMMD;
+			};
+			name = Debug;
+		};
+		1DEB927608733DD40010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Prefix.pch;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = MGMMD;
+			};
+			name = Release;
+		};
+		1DEB927908733DD40010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB927A08733DD40010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		2A9145F212233D6A0075E219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Resources/Framework-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+			};
+			name = Debug;
+		};
+		2A9145F312233D6A0075E219 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Resources/Framework-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		2A91460D12233E6B0075E219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+				SDKROOT = iphoneos3.2;
+			};
+			name = Debug;
+		};
+		2A91460E12233E6B0075E219 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+				SDKROOT = iphoneos3.2;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		2A9146391223405A0075E219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+			};
+			name = Debug;
+		};
+		2A91463A1223405A0075E219 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		2A914656122341040075E219 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+			};
+			name = Debug;
+		};
+		2A914657122341040075E219 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MGMMD;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "MGMMDTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB927508733DD40010E9CD /* Debug */,
+				1DEB927608733DD40010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "MGMMD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB927908733DD40010E9CD /* Debug */,
+				1DEB927A08733DD40010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A9145F412233D6A0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A9145F212233D6A0075E219 /* Debug */,
+				2A9145F312233D6A0075E219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A91460F12233E720075E219 /* Build configuration list for PBXNativeTarget "MGMMD Touch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A91460D12233E6B0075E219 /* Debug */,
+				2A91460E12233E6B0075E219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A91464C1223409F0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Dynamic Library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A9146391223405A0075E219 /* Debug */,
+				2A91463A1223405A0075E219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2A9146621223413A0075E219 /* Build configuration list for PBXNativeTarget "MGMMD Static Library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2A914656122341040075E219 /* Debug */,
+				2A914657122341040075E219 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}

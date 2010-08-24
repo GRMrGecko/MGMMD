@@ -1,0 +1,7 @@
+build
+*.zip
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode*
+*.xcodeproj/*.perspective*
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace/xcuserdata
