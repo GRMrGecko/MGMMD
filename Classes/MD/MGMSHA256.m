@@ -8,7 +8,7 @@
 
 #ifdef __NEXT_RUNTIME__
 #import "MGMSHA256.h"
-#import "MGMMDTypes.h"
+#import "MGMTypes.h"
 
 NSString * const MDNSHA256 = @"sha256";
 
@@ -69,7 +69,7 @@ NSString * const MDNSHA256 = @"sha256";
 #include <stdio.h>
 #include <string.h>
 #include "MGMMD5.h"
-#include "MGMMDTypes.h"
+#include "MGMTypes.h"
 #endif
 
 char *SHA256String(const char *string, int length) {

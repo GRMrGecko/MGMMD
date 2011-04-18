@@ -8,7 +8,7 @@
 
 #ifdef __NEXT_RUNTIME__
 #import "MGMMD5.h"
-#import "MGMMDTypes.h"
+#import "MGMTypes.h"
 
 
 NSString * const MDNMD5 = @"md5";
@@ -70,7 +70,7 @@ NSString * const MDNMD5 = @"md5";
 #include <stdio.h>
 #include <string.h>
 #include "MGMMD5.h"
-#include "MGMMDTypes.h"
+#include "MGMTypes.h"
 #endif
 
 char *MD5String(const char *string, int length) {

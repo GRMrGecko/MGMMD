@@ -1,5 +1,5 @@
 //
-//  MGMMDTypes.h
+//  MGMTypes.h
 //
 //  Created by Mr. Gecko on 2/24/10.
 //  No Copyright Claimed. Public Domain.

@@ -13,12 +13,13 @@
 #import "MGMSHA384.h"
 #import "MGMSHA512.h"
 #import "MGMMD.h"
+#import "MGMBase64.h"
 
 int main (int argc, const char * argv[]) {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
-	NSString *correct = @"Hash is correct.";
-	NSString *incorrect = @"Something is wrong, the hash is incorrect.";
+	NSString *correct = @"It is correct.";
+	NSString *incorrect = @"Something is wrong, it is incorrect.";
 	
 	NSString *MDString = @"Test String";
 	NSString *hash;
@@ -149,6 +150,12 @@ int main (int argc, const char * argv[]) {
 	md = [MGMMD mdWithAlgorithm:@"SHA512"];
 	[md updateWithString:MDString];
 	NSLog(@"SHA512: %@ %@", [md finalHash], ([[md finalHash] isEqual:@"1c58a65cf90dbeb31f8e4f196ce278936d70507cffea9682a9cbf79da9b046aebca9ed08c6f94d8e9f80cc4df0d5ddc65072cdb8a9b65d9e89b0fbf9bb0700ef"] ? correct : incorrect));
+	
+	NSString *cryptString = @"Test String";
+	NSString *crypt = [cryptString encodeBase64];
+	NSLog(@"Base64 Encrypt: %@ %@", crypt, ([crypt isEqual:@"VGVzdCBTdHJpbmc="] ? correct : incorrect));
+	crypt = [crypt decodeBase64];
+	NSLog(@"Base64 Decrypt: %@ %@", crypt, ([crypt isEqual:cryptString] ? correct : incorrect));
 	
     [pool drain];
     return 0;

@@ -7,7 +7,7 @@
 //
 
 #import "MGMMD.h"
-#import "MGMMDTypes.h"
+#import "MGMTypes.h"
 
 @implementation MGMMD
 + (NSString *)stringHash:(NSString *)theString usingAlgorithm:(NSString *)theAlgorithm {

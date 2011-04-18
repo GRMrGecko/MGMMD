@@ -8,7 +8,7 @@
 
 #ifdef __NEXT_RUNTIME__
 #import "MGMSHA224.h"
-#import "MGMMDTypes.h"
+#import "MGMTypes.h"
 
 NSString * const MDNSHA224 = @"sha224";
 
@@ -69,7 +69,7 @@ NSString * const MDNSHA224 = @"sha224";
 #include <stdio.h>
 #include <string.h>
 #include "MGMMD5.h"
-#include "MGMMDTypes.h"
+#include "MGMTypes.h"
 #endif
 
 char *SHA224String(const char *string, int length) {
