@@ -7,7 +7,6 @@
 //
 
 #import "MGMMD.h"
-#import "MGMTypes.h"
 
 @implementation MGMMD
 + (NSString *)stringHash:(NSString *)theString usingAlgorithm:(NSString *)theAlgorithm {
@@ -28,6 +27,9 @@
 
 + (NSArray *)supportedAlgorithms {
 	NSMutableArray *algorithms = [NSMutableArray array];
+#ifdef _MD_MD2
+	[algorithms addObject:MDNMD2];
+#endif
 #ifdef _MD_MD5
 	[algorithms addObject:MDNMD5];
 #endif
@@ -57,58 +59,55 @@
 		theAlgorithm = [theAlgorithm lowercaseString];
 		algorithm = MDNULL;
 		context = NULL;
+#ifdef _MD_MD2
+		if ([theAlgorithm isEqual:MDNMD2]) {
+			algorithm = MDMD2;
+			description = MD2Desc;
+		}
+#endif
 #ifdef _MD_MD5
 		if ([theAlgorithm isEqual:MDNMD5]) {
 			algorithm = MDMD5;
-			context = malloc(sizeof(struct MD5Context));
-			MD5Init(context);
-			algorithmLength = MD5Length;
+			description = MD5Desc;
 		}
 #endif
 #ifdef _MD_SHA1
 		if ([theAlgorithm isEqual:MDNSHA1]) {
 			algorithm = MDSHA1;
-			context = malloc(sizeof(struct SHA1Context));
-			SHA1Init(context);
-			algorithmLength = SHA1Length;
+			description = SHA1Desc;
 		}
 #endif
 #ifdef _MD_SHA224
 		if ([theAlgorithm isEqual:MDNSHA224]) {
 			algorithm = MDSHA224;
-			context = malloc(sizeof(struct SHA224Context));
-			SHA224Init(context);
-			algorithmLength = SHA224Length;
+			description = SHA224Desc;
 		}
 #endif
 #ifdef _MD_SHA256
 		if ([theAlgorithm isEqual:MDNSHA256]) {
 			algorithm = MDSHA256;
-			context = malloc(sizeof(struct SHA256Context));
-			SHA256Init(context);
-			algorithmLength = SHA256Length;
+			description = SHA256Desc;
 		}
 #endif
 #ifdef _MD_SHA384
 		if ([theAlgorithm isEqual:MDNSHA384]) {
 			algorithm = MDSHA384;
-			context = malloc(sizeof(struct SHA384Context));
-			SHA384Init(context);
-			algorithmLength = SHA384Length;
+			description = SHA384Desc;
 		}
 #endif
 #ifdef _MD_SHA512
 		if ([theAlgorithm isEqual:MDNSHA512]) {
 			algorithm = MDSHA512;
-			context = malloc(sizeof(struct SHA512Context));
-			SHA512Init(context);
-			algorithmLength = SHA512Length;
+			description = SHA512Desc;
 		}
 #endif
 		if (algorithm==MDNULL) {
 			NSLog(@"The alorithm \"%@\" is not supported.", theAlgorithm);
 			[self release];
 			self = nil;
+		} else {
+			context = malloc(description.contextSize);
+			description.init(context);
 		}
 	}
 	return self;
@@ -144,61 +143,15 @@
 }
 - (BOOL)updateWithBytes:(const char *)theBytes length:(int)theLength {
 	if (finalData!=nil) return NO;
-#ifdef _MD_MD5
-	if (algorithm==MDMD5)
-		MD5Update(context, (const unsigned char *)theBytes, theLength);
-#endif
-#ifdef _MD_SHA1
-	if (algorithm==MDSHA1)
-		SHA1Update(context, (const unsigned char *)theBytes, theLength);
-#endif
-#ifdef _MD_SHA224
-	if (algorithm==MDSHA224)
-		SHA224Update(context, (const unsigned char *)theBytes, theLength);
-#endif
-#ifdef _MD_SHA256
-	if (algorithm==MDSHA256)
-		SHA256Update(context, (const unsigned char *)theBytes, theLength);
-#endif
-#ifdef _MD_SHA384
-	if (algorithm==MDSHA384)
-		SHA384Update(context, (const unsigned char *)theBytes, theLength);
-#endif
-#ifdef _MD_SHA512
-	if (algorithm==MDSHA512)
-		SHA512Update(context, (const unsigned char *)theBytes, theLength);
-#endif
+	description.update(context, (const unsigned char *)theBytes, theLength);
 	return YES;
 }
 
 - (NSData *)finalData {
 	if (finalData==nil) {
-		unsigned char MDDigest[algorithmLength];
-#ifdef _MD_MD5
-		if (algorithm==MDMD5)
-			MD5Final(MDDigest, context);
-#endif
-#ifdef _MD_SHA1
-		if (algorithm==MDSHA1)
-			SHA1Final(MDDigest, context);
-#endif
-#ifdef _MD_SHA224
-		if (algorithm==MDSHA224)
-			SHA224Final(MDDigest, context);
-#endif
-#ifdef _MD_SHA256
-		if (algorithm==MDSHA256)
-			SHA256Final(MDDigest, context);
-#endif
-#ifdef _MD_SHA384
-		if (algorithm==MDSHA384)
-			SHA384Final(MDDigest, context);
-#endif
-#ifdef _MD_SHA512
-		if (algorithm==MDSHA512)
-			SHA512Final(MDDigest, context);
-#endif
-		finalData = [[NSData dataWithBytes:MDDigest length:algorithmLength] retain];
+		unsigned char MDDigest[description.length];
+		description.final(MDDigest, context);
+		finalData = [[NSData dataWithBytes:MDDigest length:description.length] retain];
 	}
 	return finalData;
 }
@@ -217,7 +170,7 @@
 		bytes++;
 	}
 	*hexBuffer = '\0';
-	return [[NSData dataWithBytesNoCopy:stringBuffer length:algorithmLength*2] bytes];
+	return [[NSData dataWithBytesNoCopy:stringBuffer length:description.length*2] bytes];
 }
 - (NSString *)finalHash {
 	return [NSString stringWithUTF8String:[self finalStringHash]];

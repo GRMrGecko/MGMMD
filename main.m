@@ -6,20 +6,53 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MGMMD2.h"
+#import "MGMMD4.h"
 #import "MGMMD5.h"
+#import "MGMRMD128.h"
+#import "MGMRMD160.h"
+#import "MGMRMD256.h"
+#import "MGMRMD320.h"
 #import "MGMSHA1.h"
 #import "MGMSHA224.h"
 #import "MGMSHA256.h"
 #import "MGMSHA384.h"
 #import "MGMSHA512.h"
+#import "MGMTiger.h"
 #import "MGMMD.h"
 #import "MGMBase64.h"
 
 int main (int argc, const char * argv[]) {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
-	NSString *correct = @"It is correct.";
-	NSString *incorrect = @"Something is wrong, it is incorrect.";
+	/*while (1) {
+		char *string = (char *)malloc(512);
+		scanf("%s", string);
+		if (!strcmp(string, "quit"))
+			break;
+		printf("%s\n", SHA512String(string, strlen(string)));
+		free(string);
+	}
+	
+	exit(0);*/
+	
+	NSString *correct = [@"It is correct." retain];
+	NSString *incorrect = [@"Something is wrong, it is incorrect." retain];
+	
+	NSLog(@"Running standared tests");
+	NSLog(@"MD2: %@", (MD2Test() ? correct : incorrect));
+	NSLog(@"MD4: %@", (MD4Test() ? correct : incorrect));
+	NSLog(@"MD5: %@", (MD5Test() ? correct : incorrect));
+	NSLog(@"RIPEMD128: %@", (RMD128Test() ? correct : incorrect));
+	NSLog(@"RIPEMD160: %@", (RMD160Test() ? correct : incorrect));
+	NSLog(@"RIPEMD256: %@", (RMD256Test() ? correct : incorrect));
+	NSLog(@"RIPEMD320: %@", (RMD320Test() ? correct : incorrect));
+	NSLog(@"SHA1: %@", (SHA1Test() ? correct : incorrect));
+	NSLog(@"SHA224: %@", (SHA224Test() ? correct : incorrect));
+	NSLog(@"SHA256: %@", (SHA256Test() ? correct : incorrect));
+	NSLog(@"SHA384: %@", (SHA384Test() ? correct : incorrect));
+	NSLog(@"SHA512: %@", (SHA512Test() ? correct : incorrect));
+	NSLog(@"Tiger: %@", (tigerTest() ? correct : incorrect));
 	
 	NSString *MDString = @"Test String";
 	NSString *hash;
@@ -37,9 +70,12 @@ int main (int argc, const char * argv[]) {
 	hash = [MDString SHA512];
 	NSLog(@"SHA512: %@ %@", hash, ([hash isEqual:@"924bae629fbad5096a0a68929d5314d5b10b00108c5f9387c98d4c6cfe527a3cb6bba4303ed769c1feb38699800012b50c41e638bf0b47854f78344a3ac442a8"] ? correct : incorrect));
 	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
+	
 	NSString *MDFile = [[NSBundle mainBundle] executablePath];
 	//Change this to the path of the test file.
-	MDFile = [[[[MDFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"MDTest.bin"];
+	MDFile = [[[[[MDFile stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"MDTest.bin"] retain];
 	NSLog(@"Obj-C File MD of %@", MDFile);
 	hash = [MDFile pathMD5];
 	NSLog(@"MD5: %@ %@", hash, ([hash isEqual:@"db393181e59d5b50c72bc582c505ab6f"] ? correct : incorrect));
@@ -53,6 +89,9 @@ int main (int argc, const char * argv[]) {
 	NSLog(@"SHA384: %@ %@", hash, ([hash isEqual:@"a6a1008686fcbfd55198038966fdbe6c0cc3faab7e9efc6c6394cee86601ff33ca1d54d2824bb577361aaa6aac4f8599"] ? correct : incorrect));
 	hash = [MDFile pathSHA512];
 	NSLog(@"SHA512: %@ %@", hash, ([hash isEqual:@"6801c0d3e7fdf43218e5f0986ee3e8dc33928a57470cffbde7ebdc23b454fb06024d5b0cba2646eaf58d8f53bb32eaff0d6a0ad7d97e8b4f607a181bd1bf7936"] ? correct : incorrect));
+	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
 	
 	const char *MDChar = "0123456789abcdefghijklmnopqrstuvwxyz";
 	char *hashChar;
@@ -75,6 +114,9 @@ int main (int argc, const char * argv[]) {
 	hashChar = SHA512String(MDChar, strlen(MDChar));
 	NSLog(@"SHA512: %s %@", hashChar, (strcmp(hashChar, "95cadc34aa46b9fdef432f62fe5bad8d9f475bfbecf797d5802bb5f2937a85d93ce4857a6262b03834c01c610d74cd1215f9a466dc6ad3dd15078e3309a03a6d") ? incorrect : correct));
 	free(hashChar);
+	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
 	
 	const char *MDCharFile = [MDFile UTF8String];
 	NSLog(@"C File MD of %s", MDCharFile);
@@ -109,6 +151,9 @@ int main (int argc, const char * argv[]) {
 		free(hashChar);
 	}
 	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
+	
 	MGMMD *md;
 	NSLog(@"File MGMMD of %@", MDFile);
 	md = [MGMMD mdWithAlgorithm:@"MD5"];
@@ -130,6 +175,11 @@ int main (int argc, const char * argv[]) {
 	[md updateWithFile:MDFile];
 	NSLog(@"SHA512: %@ %@", [md finalHash], ([[md finalHash] isEqual:@"6801c0d3e7fdf43218e5f0986ee3e8dc33928a57470cffbde7ebdc23b454fb06024d5b0cba2646eaf58d8f53bb32eaff0d6a0ad7d97e8b4f607a181bd1bf7936"] ? correct : incorrect));
 	
+	[MDFile release];
+	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
+	
 	MDString = @"asdjl32j4lkjDS;:J;iaslkhjouh3hjsad89y45ioausf89sahuxzyLHuiyf8yHuyhiuash";
 	NSLog(@"MGMMD of %@", MDString);
 	md = [MGMMD mdWithAlgorithm:@"MD5"];
@@ -144,6 +194,7 @@ int main (int argc, const char * argv[]) {
 	md = [MGMMD mdWithAlgorithm:@"SHA256"];
 	[md updateWithString:MDString];
 	NSLog(@"SHA256: %@ %@", [md finalHash], ([[md finalHash] isEqual:@"4b25724a05afaab26147179fdcfa7f7a81db0464d78072614a57e738b5bf1b0f"] ? correct : incorrect));
+	hash = [MDString SHA384];
 	md = [MGMMD mdWithAlgorithm:@"SHA384"];
 	[md updateWithString:MDString];
 	NSLog(@"SHA384: %@ %@", [md finalHash], ([[md finalHash] isEqual:@"665fc58df2e22ceafc373b0b951bd100a9e1f60fb68b4758ad88e32e5e5cbc02771c1a7cde672e7c5c6756860ce88a50"] ? correct : incorrect));
@@ -151,12 +202,18 @@ int main (int argc, const char * argv[]) {
 	[md updateWithString:MDString];
 	NSLog(@"SHA512: %@ %@", [md finalHash], ([[md finalHash] isEqual:@"1c58a65cf90dbeb31f8e4f196ce278936d70507cffea9682a9cbf79da9b046aebca9ed08c6f94d8e9f80cc4df0d5ddc65072cdb8a9b65d9e89b0fbf9bb0700ef"] ? correct : incorrect));
 	
+	[pool drain];
+	pool = [NSAutoreleasePool new];
+	
 	NSString *cryptString = @"Test String";
 	NSString *crypt = [cryptString encodeBase64];
 	NSLog(@"Base64 Encrypt: %@ %@", crypt, ([crypt isEqual:@"VGVzdCBTdHJpbmc="] ? correct : incorrect));
 	crypt = [crypt decodeBase64];
 	NSLog(@"Base64 Decrypt: %@ %@", crypt, ([crypt isEqual:cryptString] ? correct : incorrect));
 	
-    [pool drain];
-    return 0;
+	[correct release];
+	[incorrect release];
+	
+	[pool drain];
+	return 0;
 }

@@ -117,7 +117,7 @@ NSString * const cryptBase64 = @"base64";
 #else
 #include <stdio.h>
 #include <string.h>
-#include "MGMMD5.h"
+#include "MGMBase64.h"
 #include "MGMTypes.h"
 #endif
 

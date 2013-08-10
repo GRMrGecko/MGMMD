@@ -23,22 +23,25 @@ extern NSString * const MDNSHA384;
 extern "C" {
 #endif
 
+extern const struct MGMHashDescription SHA384Desc;
+
 char *SHA384String(const char *string, int length);
 char *SHA384File(const char *path);
 
 #define SHA384Length 48
-#define SHA384BufferSize 8
+#define SHA384BufferSize 128
 
 struct SHA384Context {
-    uint64_t buf[SHA384BufferSize];
-    uint64_t bits[2];
-    unsigned char in[128];	
+	uint64_t  length, state[8];
+	unsigned long curlen;
+	unsigned char buf[SHA384BufferSize];
 };
 
 void SHA384Init(struct SHA384Context *context);
 void SHA384Update(struct SHA384Context *context, const unsigned char *buf, uint64_t len);
 void SHA384Final(unsigned char digest[SHA384Length], struct SHA384Context *context);
-void SHA384Transform(uint64_t buf[SHA384BufferSize], const unsigned char inraw[80]);
+void SHA384Transform(struct SHA384Context *context, unsigned char *buf);
+int SHA384Test();
 
 #ifdef __cplusplus
 }

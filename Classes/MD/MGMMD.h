@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MGMTypes.h"
+#import "MGMMD2.h"
 #import "MGMMD5.h"
 #import "MGMSHA1.h"
 #import "MGMSHA224.h"
@@ -16,17 +18,18 @@
 
 typedef enum {
 	MDNULL = -1,
-	MDMD5 = 0,
-	MDSHA1 = 1,
-	MDSHA224 = 2,
-	MDSHA256 = 3,
-	MDSHA384 = 4,
-	MDSHA512 = 5,
+	MDMD2 = 0,
+	MDMD5 = 1,
+	MDSHA1 = 2,
+	MDSHA224 = 3,
+	MDSHA256 = 4,
+	MDSHA384 = 5,
+	MDSHA512 = 6,
 } MGMMDType;
 
 @interface MGMMD : NSObject {
 	MGMMDType algorithm;
-	int algorithmLength;
+	struct MGMHashDescription description;
 	void *context;
 	NSData *finalData;
 }

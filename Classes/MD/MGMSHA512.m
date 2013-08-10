@@ -68,9 +68,18 @@ NSString * const MDNSHA512 = @"sha512";
 #else
 #include <stdio.h>
 #include <string.h>
-#include "MGMMD5.h"
+#include "MGMSHA512.h"
 #include "MGMTypes.h"
 #endif
+
+const struct MGMHashDescription SHA512Desc = {
+	"sha512",
+    sizeof(struct SHA512Context),
+    (void(*)(void *))&SHA512Init,
+	(void(*)(void *, const unsigned char *, unsigned))&SHA512Update,
+	(void(*)(unsigned char *, void *))&SHA512Final,
+	SHA512Length
+};
 
 char *SHA512String(const char *string, int length) {
 	struct SHA512Context MDContext;
@@ -122,70 +131,68 @@ char *SHA512File(const char *path) {
 }
 
 void SHA512Init(struct SHA512Context *context) {
-	context->buf[0] = INT64(0x6a09e667f3bcc908);
-	context->buf[1] = INT64(0xbb67ae8584caa73b);
-	context->buf[2] = INT64(0x3c6ef372fe94f82b);
-	context->buf[3] = INT64(0xa54ff53a5f1d36f1);
-	context->buf[4] = INT64(0x510e527fade682d1);
-	context->buf[5] = INT64(0x9b05688c2b3e6c1f);
-	context->buf[6] = INT64(0x1f83d9abfb41bd6b);
-	context->buf[7] = INT64(0x5be0cd19137e2179);
+	context->state[0] = INT64(0x6a09e667f3bcc908);
+	context->state[1] = INT64(0xbb67ae8584caa73b);
+	context->state[2] = INT64(0x3c6ef372fe94f82b);
+	context->state[3] = INT64(0xa54ff53a5f1d36f1);
+	context->state[4] = INT64(0x510e527fade682d1);
+	context->state[5] = INT64(0x9b05688c2b3e6c1f);
+	context->state[6] = INT64(0x1f83d9abfb41bd6b);
+	context->state[7] = INT64(0x5be0cd19137e2179);
 	
-	context->bits[0] = 0;
-	context->bits[1] = 0;
+	context->curlen = 0;
+	context->length = 0;
 }
 
 void SHA512Update(struct SHA512Context *context, const unsigned char *buf, uint64_t len) {
-	uint64_t t;
-	
-	t = context->bits[0];
-	if ((context->bits[0] = (t + ((uint64_t)len << 3))) < t)
-		context->bits[1]++;
-	context->bits[1] += len >> 61;
-	
-	t = (t >> 3) & 0x7f;
-	
-	if (t!=0) {
-		unsigned char *p = context->in + t;
-		
-		t = 128-t;
-		if (len < t) {
-			memcpy(p, buf, len);
-			return;
+	if (buf==NULL)
+		return;
+	unsigned long n;
+	while (len>0) {
+		if (context->curlen == 0 && len>=SHA512BufferSize) {
+			SHA512Transform(context, (unsigned char *)buf);
+			context->length += SHA512BufferSize * 8;
+			buf += SHA512BufferSize;
+			len -= SHA512BufferSize;
+		} else {
+			n = MIN(len, (SHA512BufferSize-context->curlen));
+			memcpy(context->buf+context->curlen, buf, (size_t)n);
+			context->curlen += n;
+			buf += n;
+			len -= n;
+			if (context->curlen == SHA512BufferSize) {
+				SHA512Transform(context, context->buf);
+				context->length += 8*SHA512BufferSize;
+				context->curlen = 0;
+			}
 		}
-		memcpy(p, buf, t);
-		SHA512Transform(context->buf, context->in);
-		buf += t;
-		len -= t;
 	}
-	
-	while (len >= 128) {
-		memcpy(context->in, buf, 128);
-		SHA512Transform(context->buf, context->in);
-		buf += 128;
-		len -= 128;
-	}
-	
-	memcpy(context->in, buf, len);
 }
 
 void SHA512Final(unsigned char digest[SHA512Length], struct SHA512Context *context) {
-	unsigned char bits[16];
-	unsigned int count;
+	context->length += context->curlen * INT64(8);
+	context->buf[context->curlen++] = (unsigned char)0x80;
 	
-	putu64(context->bits[1], bits);
-	putu64(context->bits[0], bits + 8);
+	if (context->curlen > 112) {
+		while (context->curlen < 128) {
+			context->buf[context->curlen++] = (unsigned char)0;
+		}
+		SHA512Transform(context, context->buf);
+		context->curlen = 0;
+	}
 	
-	count = (context->bits[0] >> 3) & 0x7f;
-	count = (count < 112) ? (112 - count) : (240 - count);
-	SHA512Update(context, MDPadding, count);
+	while (context->curlen < 120) {
+		context->buf[context->curlen++] = (unsigned char)0;
+	}
 	
-	SHA512Update(context, bits, 16);
+	putu64(context->length, context->buf+120);
+	SHA512Transform(context, context->buf);
 	
-	for (int i=0; i<8; i++)
-		putu64(context->buf[i], digest + (8 * i));
+	for (int i=0; i<8; i++) {
+		putu64(context->state[i], digest+(8*i));
+	}
 	
-	memset(context, 0, sizeof(context));
+	memset(context, 0, sizeof(struct SHA512Context));
 }
 
 /* #define SHA512_F1(x, y, z) (x & y | ~x & z) */
@@ -224,29 +231,29 @@ static const uint64_t SHA512_Key[128] = {
 };
 
 #define SHA512STEP(a, b, c, d, e, f, g, h, s) \
-	t1 = h + SHA512_F4(e) + SHA512_F1(e, f, g) + SHA512_Key[s] + in[s]; \
+	t1 = h + SHA512_F4(e) + SHA512_F1(e, f, g) + SHA512_Key[s] + x[s]; \
 	t2 = SHA512_F3(a) + SHA512_F2(a, b, c); \
 	d += t1; \
 	h = t1 + t2;
 
-void SHA512Transform(uint64_t buf[SHA512BufferSize], const unsigned char inraw[80]) {
-	uint64_t in[80], t1, t2;
+void SHA512Transform(struct SHA512Context *context, unsigned char *buf) {
+	uint64_t x[80], t1, t2;
 	int i;
 	
-	uint64_t a = buf[0];
-	uint64_t b = buf[1];
-	uint64_t c = buf[2];
-	uint64_t d = buf[3];
-	uint64_t e = buf[4];
-	uint64_t f = buf[5];
-	uint64_t g = buf[6];
-	uint64_t h = buf[7];
+	uint64_t a = context->state[0];
+	uint64_t b = context->state[1];
+	uint64_t c = context->state[2];
+	uint64_t d = context->state[3];
+	uint64_t e = context->state[4];
+	uint64_t f = context->state[5];
+	uint64_t g = context->state[6];
+	uint64_t h = context->state[7];
 	
 	for (i = 0; i < 16; i++)
-		in[i] = getu64(inraw+8*i);
+		x[i] = getu64(buf+(8*i));
 	
 	for (i = 16; i < 80; i++)
-		in[i] = SHA512_F6(in[i - 2]) + in[i - 7] + SHA512_F5(in[i - 15]) + in[i - 16];
+		x[i] = SHA512_F6(x[i - 2]) + x[i - 7] + SHA512_F5(x[i - 15]) + x[i - 16];
 	
 	for (int i=0; i<80; i = i + 8) {
 		SHA512STEP(a, b, c, d, e, f, g, h, i);
@@ -259,12 +266,43 @@ void SHA512Transform(uint64_t buf[SHA512BufferSize], const unsigned char inraw[8
 		SHA512STEP(b, c, d, e, f, g, h, a, i + 7);
 	}
 		
-	buf[0] += a;
-	buf[1] += b;
-	buf[2] += c;
-	buf[3] += d;
-	buf[4] += e;
-	buf[5] += f;
-	buf[6] += g;
-	buf[7] += h;
+	context->state[0] += a;
+	context->state[1] += b;
+	context->state[2] += c;
+	context->state[3] += d;
+	context->state[4] += e;
+	context->state[5] += f;
+	context->state[6] += g;
+	context->state[7] += h;
+}
+
+int SHA512Test() {
+	static const struct {
+		char *msg;
+		unsigned char hash[SHA512Length];
+	} tests[] = {
+		{
+			"abc",
+			{0xdd,0xaf,0x35,0xa1,0x93,0x61,0x7a,0xba,0xcc,0x41,0x73,0x49,0xae,0x20,0x41,0x31,0x12,0xe6,0xfa,0x4e,0x89,0xa9,0x7e,0xa2,0x0a,0x9e,0xee,0xe6,0x4b,0x55,0xd3,0x9a,0x21,0x92,0x99,0x2a,0x27,0x4f,0xc1,0xa8,0x36,0xba,0x3c,0x23,0xa3,0xfe,0xeb,0xbd,0x45,0x4d,0x44,0x23,0x64,0x3c,0xe8,0x0e,0x2a,0x9a,0xc9,0x4f,0xa5,0x4c,0xa4,0x9f}
+		},
+		{
+			"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu",
+			{0x8e,0x95,0x9b,0x75,0xda,0xe3,0x13,0xda,0x8c,0xf4,0xf7,0x28,0x14,0xfc,0x14,0x3f,0x8f,0x77,0x79,0xc6,0xeb,0x9f,0x7f,0xa1,0x72,0x99,0xae,0xad,0xb6,0x88,0x90,0x18,0x50,0x1d,0x28,0x9e,0x49,0x00,0xf7,0xe4,0x33,0x1b,0x99,0xde,0xc4,0xb5,0x43,0x3a,0xc7,0xd3,0x29,0xee,0xb6,0xdd,0x26,0x54,0x5e,0x96,0xe5,0x5b,0x87,0x4b,0xe9,0x09}
+		},
+		{NULL, {0}}
+	};
+	
+	struct SHA512Context MDContext;
+	unsigned char MDDigest[SHA512Length];
+	
+	for (int i=0; tests[i].msg!=NULL; i++) {
+		SHA512Init(&MDContext);
+		SHA512Update(&MDContext, (unsigned char *)tests[i].msg, (unsigned long)strlen(tests[i].msg));
+		SHA512Final(MDDigest, &MDContext);
+		
+		if (memcmp(MDDigest, tests[i].hash, SHA512Length))
+			return 0;
+	}
+	
+	return 1;
 }

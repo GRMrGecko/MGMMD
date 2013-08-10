@@ -24,22 +24,25 @@ extern NSString * const MDNMD5;
 extern "C" {
 #endif
 
+extern const struct MGMHashDescription MD5Desc;
+
 char *MD5String(const char *string, int length);
 char *MD5File(const char *path);
 
 #define MD5Length 16
-#define MD5BufferSize 4
+#define MD5BufferSize 64
 
 struct MD5Context {
-	uint32_t buf[MD5BufferSize];
-	uint32_t bits[2];
-	unsigned char in[64];
+	uint32_t length;
+	uint32_t state[4], curlen;
+	unsigned char buf[MD5BufferSize];
 };
 
 void MD5Init(struct MD5Context *context);
 void MD5Update(struct MD5Context *context, const unsigned char *buf, unsigned len);
 void MD5Final(unsigned char digest[MD5Length], struct MD5Context *context);
-void MD5Transform(uint32_t buf[MD5BufferSize], const unsigned char inraw[64]);
+void MD5Transform(struct MD5Context *context, unsigned char *buf);
+int MD5Test();
 
 #ifdef __cplusplus
 }

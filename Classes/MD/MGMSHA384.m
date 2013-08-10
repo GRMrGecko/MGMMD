@@ -68,9 +68,18 @@ NSString * const MDNSHA384 = @"sha384";
 #else
 #include <stdio.h>
 #include <string.h>
-#include "MGMMD5.h"
+#include "MGMSHA384.h"
 #include "MGMTypes.h"
 #endif
+
+const struct MGMHashDescription SHA384Desc = {
+	"sha384",
+    sizeof(struct SHA384Context),
+    (void(*)(void *))&SHA384Init,
+	(void(*)(void *, const unsigned char *, unsigned))&SHA384Update,
+	(void(*)(unsigned char *, void *))&SHA384Final,
+	SHA384Length
+};
 
 char *SHA384String(const char *string, int length) {
 	struct SHA384Context MDContext;
@@ -122,70 +131,69 @@ char *SHA384File(const char *path) {
 }
 
 void SHA384Init(struct SHA384Context *context) {
-	context->buf[0] = INT64(0xcbbb9d5dc1059ed8);
-	context->buf[1] = INT64(0x629a292a367cd507);
-	context->buf[2] = INT64(0x9159015a3070dd17);
-	context->buf[3] = INT64(0x152fecd8f70e5939);
-	context->buf[4] = INT64(0x67332667ffc00b31);
-	context->buf[5] = INT64(0x8eb44a8768581511);
-	context->buf[6] = INT64(0xdb0c2e0d64f98fa7);
-	context->buf[7] = INT64(0x47b5481dbefa4fa4);
+	context->state[0] = INT64(0xcbbb9d5dc1059ed8);
+	context->state[1] = INT64(0x629a292a367cd507);
+	context->state[2] = INT64(0x9159015a3070dd17);
+	context->state[3] = INT64(0x152fecd8f70e5939);
+	context->state[4] = INT64(0x67332667ffc00b31);
+	context->state[5] = INT64(0x8eb44a8768581511);
+	context->state[6] = INT64(0xdb0c2e0d64f98fa7);
+	context->state[7] = INT64(0x47b5481dbefa4fa4);
 	
-	context->bits[0] = 0;
-	context->bits[1] = 0;
+	context->curlen = 0;
+	context->length = 0;
 }
 
 void SHA384Update(struct SHA384Context *context, const unsigned char *buf, uint64_t len) {
-	uint64_t t;
+	if (buf==NULL)
+		return;
 	
-	t = context->bits[0];
-	if ((context->bits[0] = (t + ((uint64_t)len << 3))) < t)
-		context->bits[1]++;
-	context->bits[1] += len >> 61;
-	
-	t = (t >> 3) & 0x7f;
-	
-	if (t!=0) {
-		unsigned char *p = context->in + t;
-		
-		t = 128-t;
-		if (len < t) {
-			memcpy(p, buf, len);
-			return;
+	unsigned long n;
+	while (len>0) {
+		if (context->curlen == 0 && len>=SHA384BufferSize) {
+			SHA384Transform(context, (unsigned char *)buf);
+			context->length += SHA384BufferSize * 8;
+			buf += SHA384BufferSize;
+			len -= SHA384BufferSize;
+		} else {
+			n = MIN(len, (SHA384BufferSize-context->curlen));
+			memcpy(context->buf+context->curlen, buf, (size_t)n);
+			context->curlen += n;
+			buf += n;
+			len -= n;
+			if (context->curlen == SHA384BufferSize) {
+				SHA384Transform(context, context->buf);
+				context->length += 8*SHA384BufferSize;
+				context->curlen = 0;
+			}
 		}
-		memcpy(p, buf, t);
-		SHA384Transform(context->buf, context->in);
-		buf += t;
-		len -= t;
 	}
-	
-	while (len >= 128) {
-		memcpy(context->in, buf, 128);
-		SHA384Transform(context->buf, context->in);
-		buf += 128;
-		len -= 128;
-	}
-	
-	memcpy(context->in, buf, len);
 }
 
 void SHA384Final(unsigned char digest[SHA384Length], struct SHA384Context *context) {
-	unsigned char bits[16];
-	unsigned int count;
+	context->length += context->curlen * INT64(8);
+	context->buf[context->curlen++] = (unsigned char)0x80;
 	
-	putu64(context->bits[1], bits);
-	putu64(context->bits[0], bits + 8);
+	if (context->curlen > 112) {
+		while (context->curlen < 128) {
+			context->buf[context->curlen++] = (unsigned char)0;
+		}
+		SHA384Transform(context, context->buf);
+		context->curlen = 0;
+	}
 	
-	count = (context->bits[0] >> 3) & 0x7f;
-	count = (count < 112) ? (112 - count) : (240 - count);
-	SHA384Update(context, MDPadding, count);
+	while (context->curlen < 120) {
+		context->buf[context->curlen++] = (unsigned char)0;
+	}
 	
-	SHA384Update(context, bits, 16);
+	putu64(context->length, context->buf+120);
+	SHA384Transform(context, context->buf);
 	
-	for (int i=0; i<6; i++)
-		putu64(context->buf[i], digest + (8 * i));
+	for (int i=0; i<8; i++) {
+		putu64(context->state[i], digest+(8*i));
+	}
 	
-	memset(context, 0, sizeof(context));
+	memset(context, 0, sizeof(struct SHA384Context));
 }
 
 /* #define SHA384_F1(x, y, z) (x & y | ~x & z) */
@@ -224,29 +232,29 @@ static const uint64_t SHA384_Key[128] = {
 };
 
 #define SHA384STEP(a, b, c, d, e, f, g, h, s) \
-	t1 = h + SHA384_F4(e) + SHA384_F1(e, f, g) + SHA384_Key[s] + in[s]; \
+	t1 = h + SHA384_F4(e) + SHA384_F1(e, f, g) + SHA384_Key[s] + x[s]; \
 	t2 = SHA384_F3(a) + SHA384_F2(a, b, c); \
 	d += t1; \
 	h = t1 + t2;
 
-void SHA384Transform(uint64_t buf[SHA384BufferSize], const unsigned char inraw[80]) {
-	uint64_t in[80], t1, t2;
+void SHA384Transform(struct SHA384Context *context, unsigned char *buf) {
+	uint64_t x[80], t1, t2;
 	int i;
 	
-	uint64_t a = buf[0];
-	uint64_t b = buf[1];
-	uint64_t c = buf[2];
-	uint64_t d = buf[3];
-	uint64_t e = buf[4];
-	uint64_t f = buf[5];
-	uint64_t g = buf[6];
-	uint64_t h = buf[7];
+	uint64_t a = context->state[0];
+	uint64_t b = context->state[1];
+	uint64_t c = context->state[2];
+	uint64_t d = context->state[3];
+	uint64_t e = context->state[4];
+	uint64_t f = context->state[5];
+	uint64_t g = context->state[6];
+	uint64_t h = context->state[7];
 	
 	for (i = 0; i < 16; i++)
-		in[i] = getu64(inraw+8*i);
+		x[i] = getu64(buf+(8*i));
 	
 	for (i = 16; i < 80; i++)
-		in[i] = SHA384_F6(in[i - 2]) + in[i - 7] + SHA384_F5(in[i - 15]) + in[i - 16];
+		x[i] = SHA384_F6(x[i - 2]) + x[i - 7] + SHA384_F5(x[i - 15]) + x[i - 16];
 	
 	for (int i=0; i<80; i = i + 8) {
 		SHA384STEP(a, b, c, d, e, f, g, h, i);
@@ -259,12 +267,43 @@ void SHA384Transform(uint64_t buf[SHA384BufferSize], const unsigned char inraw[8
 		SHA384STEP(b, c, d, e, f, g, h, a, i + 7);
 	}
 		
-	buf[0] += a;
-	buf[1] += b;
-	buf[2] += c;
-	buf[3] += d;
-	buf[4] += e;
-	buf[5] += f;
-	buf[6] += g;
-	buf[7] += h;
+	context->state[0] += a;
+	context->state[1] += b;
+	context->state[2] += c;
+	context->state[3] += d;
+	context->state[4] += e;
+	context->state[5] += f;
+	context->state[6] += g;
+	context->state[7] += h;
+}
+
+int SHA384Test() {
+	static const struct {
+		char *msg;
+		unsigned char hash[SHA384Length];
+	} tests[] = {
+		{
+			"abc",
+			{0xcb,0x00,0x75,0x3f,0x45,0xa3,0x5e,0x8b,0xb5,0xa0,0x3d,0x69,0x9a,0xc6,0x50,0x07,0x27,0x2c,0x32,0xab,0x0e,0xde,0xd1,0x63,0x1a,0x8b,0x60,0x5a,0x43,0xff,0x5b,0xed,0x80,0x86,0x07,0x2b,0xa1,0xe7,0xcc,0x23,0x58,0xba,0xec,0xa1,0x34,0xc8,0x25,0xa7}
+		},
+		{
+			"abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu",
+			{0x09,0x33,0x0c,0x33,0xf7,0x11,0x47,0xe8,0x3d,0x19,0x2f,0xc7,0x82,0xcd,0x1b,0x47,0x53,0x11,0x1b,0x17,0x3b,0x3b,0x05,0xd2,0x2f,0xa0,0x80,0x86,0xe3,0xb0,0xf7,0x12,0xfc,0xc7,0xc7,0x1a,0x55,0x7e,0x2d,0xb9,0x66,0xc3,0xe9,0xfa,0x91,0x74,0x60,0x39}
+		},
+		{NULL, {0}}
+	};
+	
+	struct SHA384Context MDContext;
+	unsigned char MDDigest[SHA384Length];
+	
+	for (int i=0; tests[i].msg!=NULL; i++) {
+		SHA384Init(&MDContext);
+		SHA384Update(&MDContext, (unsigned char *)tests[i].msg, (unsigned long)strlen(tests[i].msg));
+		SHA384Final(MDDigest, &MDContext);
+		
+		if (memcmp(MDDigest, tests[i].hash, SHA384Length))
+			return 0;
+	}
+	
+	return 1;
 }

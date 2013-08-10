@@ -23,22 +23,25 @@ extern NSString * const MDNSHA224;
 extern "C" {
 #endif
 
+extern const struct MGMHashDescription SHA224Desc;
+
 char *SHA224String(const char *string, int length);
 char *SHA224File(const char *path);
 
 #define SHA224Length 28
-#define SHA224BufferSize 8
+#define SHA224BufferSize 64
 
 struct SHA224Context {
-    uint32_t buf[SHA224BufferSize];
-    uint32_t bits[2];
-    unsigned char in[64];	
+	uint64_t length;
+	uint32_t state[8], curlen;
+	unsigned char buf[SHA224BufferSize];
 };
 
 void SHA224Init(struct SHA224Context *context);
 void SHA224Update(struct SHA224Context *context, const unsigned char *buf, unsigned int len);
 void SHA224Final(unsigned char digest[SHA224Length], struct SHA224Context *context);
-void SHA224Transform(uint32_t buf[SHA224BufferSize], const unsigned char inraw[64]);
+void SHA224Transform(struct SHA224Context *context, unsigned char *buf);
+int SHA224Test();
 
 #ifdef __cplusplus
 }

@@ -9,11 +9,29 @@
 #import <Foundation/Foundation.h>
 #endif
 
+struct MGMHashDescription {
+	char *name;
+	int contextSize;
+	void (*init)(void *);
+	void (*update)(void *, const unsigned char *, unsigned);
+	void (*final)(unsigned char *, void *);
+	int length;
+};
+
+#if !defined(MIN)
+	#define MIN(A,B)	({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
+#endif
+
+#define INT32(n) n ## UL
 #define INT64(n) n ## ULL
 
 #define ROR32(x, b) ((x >> b) | (x << (32 - b)))
 #define ROR64(x, b) ((x >> b) | (x << (64 - b)))
+#define ROL32(x, b) ((x << b) | (x >> (32 - b)))
+#define ROL64(x, b) ((x << b) | (x >> (64 - b)))
 #define SHR(x, b) (x >> b)
+
+#define byte(x, n) (((x) >> (8 * (n))) & 255)
 
 #define MDFileReadLength 1048576
 

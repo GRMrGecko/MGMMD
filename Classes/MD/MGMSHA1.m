@@ -69,9 +69,18 @@ NSString * const MDNSHA1 = @"sha1";
 #else
 #include <stdio.h>
 #include <string.h>
-#include "MGMMD5.h"
+#include "MGMSHA1.h"
 #include "MGMTypes.h"
 #endif
+
+const struct MGMHashDescription SHA1Desc = {
+	"sha1",
+    sizeof(struct SHA1Context),
+    (void(*)(void *))&SHA1Init,
+	(void(*)(void *, const unsigned char *, unsigned))&SHA1Update,
+	(void(*)(unsigned char *, void *))&SHA1Final,
+	SHA1Length
+};
 
 char *SHA1String(const char *string, int length) {
 	struct SHA1Context MDContext;
@@ -123,59 +132,71 @@ char *SHA1File(const char *path) {
 }
 
 void SHA1Init(struct SHA1Context *context) {
-	context->buf[0] = 0x67452301;
-	context->buf[1] = 0xEFCDAB89;
-	context->buf[2] = 0x98BADCFE;
-	context->buf[3] = 0x10325476;
-	context->buf[4] = 0xC3D2E1F0;
+	context->state[0] = INT32(0x67452301);
+	context->state[1] = INT32(0xEFCDAB89);
+	context->state[2] = INT32(0x98BADCFE);
+	context->state[3] = INT32(0x10325476);
+	context->state[4] = INT32(0xC3D2E1F0);
 	
-	context->bits[0] = 0;
-	context->bits[1] = 0;
+	context->curlen = 0;
+	context->length = 0;
 }
 
 void SHA1Update(struct SHA1Context *context, const unsigned char *buf, unsigned len) {
-	u_int32_t i, j;
-	
-	j = context->bits[0];
-	if ((context->bits[0] += len << 3) < j)
-		context->bits[1]++;
-	context->bits[1] += (len>>29);
-	j = (j >> 3) & 63;
-	if ((j + len) > 63) {
-		memcpy(&context->in[j], buf, (i = 64-j));
-		SHA1Transform(context->buf, context->in);
-		for ( ; i + 63 < len; i += 64) {
-			SHA1Transform(context->buf, &buf[i]);
+	if (buf==NULL)
+		return;
+	unsigned long n;
+	while (len>0) {
+		if (context->curlen == 0 && len>=SHA1BufferSize) {
+			SHA1Transform(context, (unsigned char *)buf);
+			context->length += SHA1BufferSize * 8;
+			buf += SHA1BufferSize;
+			len -= SHA1BufferSize;
+		} else {
+			n = MIN(len, (SHA1BufferSize-context->curlen));
+			memcpy(context->buf+context->curlen, buf, (size_t)n);
+			context->curlen += n;
+			buf += n;
+			len -= n;
+			if (context->curlen == SHA1BufferSize) {
+				SHA1Transform(context, context->buf);
+				context->length += 8*SHA1BufferSize;
+				context->curlen = 0;
+			}
 		}
-		j = 0;
 	}
-	else i = 0;
-	memcpy(&context->in[j], &buf[i], len - i);
 }
 
 void SHA1Final(unsigned char digest[SHA1Length], struct SHA1Context *context) {
-	unsigned char bits[8];
-	unsigned int count;
+	context->length += context->curlen * 8;
+	context->buf[context->curlen++] = (unsigned char)0x80;
 	
-	putu32(context->bits[1], bits);
-	putu32(context->bits[0], bits + 4);
+	if (context->curlen > 56) {
+		while (context->curlen < 64) {
+			context->buf[context->curlen++] = (unsigned char)0;
+		}
+		SHA1Transform(context, context->buf);
+		context->curlen = 0;
+	}
 	
-	count = (context->bits[0] >> 3) & 0x3f;
-	count = (count < 56) ? (56 - count) : (120 - count);
-	SHA1Update(context, MDPadding, count);
+	while (context->curlen < 56) {
+		context->buf[context->curlen++] = (unsigned char)0;
+	}
 	
-	SHA1Update(context, bits, 8);
+	putu64(context->length, context->buf+56);
+	SHA1Transform(context, context->buf);
 	
-	for (int i=0; i<5; i++)
-		putu32(context->buf[i], digest + (4 * i));
+	for (int i=0; i<5; i++) {
+		putu32(context->state[i], digest+(4*i));
+	}
 	
-	memset(context, 0, sizeof(context));
+	memset(context, 0, sizeof(struct SHA1Context));
 }
 
 #define SHA1_rol(value, bits) (((value) << (bits)) | ((value) >> (32 - (bits))))
 
 #if BYTE_ORDER == LITTLE_ENDIAN
-#define SHA1_blk0(i) (block->l[i] = (SHA1_rol(block->l[i], 24)&0xFF00FF00) |(SHA1_rol(block->l[i], 8)&0x00FF00FF))
+#define SHA1_blk0(i) (block->l[i] = (SHA1_rol(block->l[i], 24)&INT32(0xFF00FF00)) |(SHA1_rol(block->l[i], 8)&INT32(0x00FF00FF)))
 #elif BYTE_ORDER == BIG_ENDIAN
 #define SHA1_blk0(i) block->l[i]
 #else
@@ -183,11 +204,11 @@ void SHA1Final(unsigned char digest[SHA1Length], struct SHA1Context *context) {
 #endif
 #define SHA1_blk(i) (block->l[i&15] = SHA1_rol(block->l[(i+13)&15]^block->l[(i+8)&15] ^block->l[(i+2)&15]^block->l[i&15], 1))
 
-#define SHA1_R0(v, w, x, y, z, i) z+=((w&(x^y))^y)+SHA1_blk0(i)+0x5A827999+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
-#define SHA1_R1(v, w, x, y, z, i) z+=((w&(x^y))^y)+SHA1_blk(i)+0x5A827999+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
-#define SHA1_R2(v, w, x, y, z, i) z+=(w^x^y)+SHA1_blk(i)+0x6ED9EBA1+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
-#define SHA1_R3(v, w, x, y, z, i) z+=(((w|x)&y)|(w&x))+SHA1_blk(i)+0x8F1BBCDC+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
-#define SHA1_R4(v, w, x, y, z, i) z+=(w^x^y)+SHA1_blk(i)+0xCA62C1D6+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
+#define SHA1_R0(v, w, x, y, z, i) z+=((w&(x^y))^y)+SHA1_blk0(i)+INT32(0x5A827999)+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
+#define SHA1_R1(v, w, x, y, z, i) z+=((w&(x^y))^y)+SHA1_blk(i)+INT32(0x5A827999)+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
+#define SHA1_R2(v, w, x, y, z, i) z+=(w^x^y)+SHA1_blk(i)+INT32(0x6ED9EBA1)+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
+#define SHA1_R3(v, w, x, y, z, i) z+=(((w|x)&y)|(w&x))+SHA1_blk(i)+INT32(0x8F1BBCDC)+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
+#define SHA1_R4(v, w, x, y, z, i) z+=(w^x^y)+SHA1_blk(i)+INT32(0xCA62C1D6)+SHA1_rol(v, 5);w=SHA1_rol(w, 30);
 
 #define SHA1STEP(v, w, x, y, z, i) \
 	if (i<16) {SHA1_R0(v, w, x, y, z, i);} else \
@@ -196,18 +217,18 @@ void SHA1Final(unsigned char digest[SHA1Length], struct SHA1Context *context) {
 	if (i<60) {SHA1_R3(v, w, x, y, z, i);} else \
 	if (i<80) {SHA1_R4(v, w, x, y, z, i);}
 
-void SHA1Transform(uint32_t buf[SHA1BufferSize], const unsigned char inraw[64]) {
+void SHA1Transform(struct SHA1Context *context, unsigned char *buf) {
 	typedef union {
 		char c[64];
 		u_int32_t l[16];
 	} SHA1LONG;
-	SHA1LONG *block = (SHA1LONG *)inraw;
+	SHA1LONG *block = (SHA1LONG *)buf;
 	
-	u_int32_t a = buf[0];
-	u_int32_t b = buf[1];
-	u_int32_t c = buf[2];
-	u_int32_t d = buf[3];
-	u_int32_t e = buf[4];
+	u_int32_t a = context->state[0];
+	u_int32_t b = context->state[1];
+	u_int32_t c = context->state[2];
+	u_int32_t d = context->state[3];
+	u_int32_t e = context->state[4];
 	
 	for (int i=0; i<79; i = i+5) {
 		SHA1STEP(a, b, c, d, e, i);
@@ -217,9 +238,40 @@ void SHA1Transform(uint32_t buf[SHA1BufferSize], const unsigned char inraw[64]) 
 		SHA1STEP(b, c, d, e, a, i + 4);
 	}
 	
-	buf[0] += a;
-	buf[1] += b;
-	buf[2] += c;
-	buf[3] += d;
-	buf[4] += e;
+	context->state[0] += a;
+	context->state[1] += b;
+	context->state[2] += c;
+	context->state[3] += d;
+	context->state[4] += e;
+}
+
+int SHA1Test() {
+	static const struct {
+		char *msg;
+		unsigned char hash[SHA1Length];
+	} tests[] = {
+		{
+			"abc",
+			{0xa9,0x99,0x3e,0x36,0x47,0x06,0x81,0x6a,0xba,0x3e,0x25,0x71,0x78,0x50,0xc2,0x6c,0x9c,0xd0,0xd8,0x9d}
+		},
+		{
+			"abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
+			{0x84,0x98,0x3E,0x44,0x1C,0x3B,0xD2,0x6E,0xBA,0xAE,0x4A,0xA1,0xF9,0x51,0x29,0xE5,0xE5,0x46,0x70,0xF1}
+		},
+		{NULL, {0}}
+	};
+	
+	struct SHA1Context MDContext;
+	unsigned char MDDigest[SHA1Length];
+	
+	for (int i=0; tests[i].msg!=NULL; i++) {
+		SHA1Init(&MDContext);
+		SHA1Update(&MDContext, (unsigned char *)tests[i].msg, (unsigned long)strlen(tests[i].msg));
+		SHA1Final(MDDigest, &MDContext);
+		
+		if (memcmp(MDDigest, tests[i].hash, SHA1Length))
+			return 0;
+	}
+	
+	return 1;
 }
